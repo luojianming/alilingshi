@@ -1,0 +1,57 @@
+/*
+ *= require chosen
+ */
+.product_info .name{
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.product_info .description{
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.small_font{
+  font-size: 12px;
+  color: #999;
+}
+
+.product_info .small_font{
+  margin-right: 38px;
+}
+
+.new_line_item label{
+  display: inline;
+  margin-right: 10px;
+}
+
+.new_line_item{
+  margin-top: 20px;
+}
+
+.new_line_item .btn{
+  margin-left: 70px;
+}
+
+.color_selected{
+  border: 1px solid red;
+}
+
+.submit_btn{
+  margin-top: 10px;
+}
+
+.links a{
+  font-size: 14px;
+}
+
+.links{
+  margin-top: 5px;
+  margin-left: 45px;
+}
+
+.product_description textarea{
+  height: 80px;
+}
+
+

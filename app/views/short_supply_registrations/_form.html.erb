@@ -1,0 +1,15 @@
+<%= simple_form_for(@short_supply_registration) do |f| %>
+  <!--
+  <%= f.error_notification %>
+  -->
+  <div class="form-inputs">
+    <%= f.input :name, :label => t('.name'), :required => true %>
+    <%= f.input :size , :label => t('.size')%>
+    <%= f.input :brand, :label => t('.brand') %>
+    <%= f.input :description, :label => t('.description'),:as => :text, :hint => t('.description_hint') %>
+    <%= f.input :tel, :label => t('.tel'), :required => true %>
+    <%= f.input :addr, :label => t('.addr'), :required => true %>
+    <%= f.button :submit, t('.create') %>
+  </div>
+
+<% end %>

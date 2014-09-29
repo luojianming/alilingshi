@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "阿里零食" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "CorteChino" %>">
+    <% if content_for?(:stylesheet) %>
+      <%= yield(:stylesheet) %>
+    <% else %>
+      <%= stylesheet_link_tag "application" %>
+    <% end %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= yield(:head) %>
+  </head>
+  <body class="<%= controller_name %> <%= action_name %>">
+    <!-- 
+    <header class="navbar navbar-fixed-top">
+      <nav class="navbar-inner">
+        <div class="container">
+        </div>
+      </nav>
+      </header>
+      -->
+    <div class="wrap">
+      <%= render 'layouts/header' %>
+      <div id="main" role="main" class="main">  
+        <div class="container">
+          <div class="content">
+            <div class="row" >
+              <div class="span12">
+                <%= render 'layouts/messages' %>
+                <%= yield %>
+              </div>
+            </div>
+          </div>
+        </div> <!--! end of .container -->
+      </div> <!--! end of #main -->
+
+      <div class="push"></div>
+    </div> <%= render 'layouts/footer' %> </body>
+</html>

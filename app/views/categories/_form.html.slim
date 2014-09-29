@@ -1,0 +1,12 @@
+= simple_form_for @category do |f|
+  table
+    tr
+      td
+        a.category_node href="javascript:void(0)"
+          i.icon-folder-open
+      td
+        = f.input :name, :label => false
+  .actions.submit_category_form
+    = f.button :submit, :disable_with => 'Please wait...'
+
+

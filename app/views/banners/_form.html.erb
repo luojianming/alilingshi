@@ -1,0 +1,9 @@
+<%= simple_form_for @banner, multipart: true do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :visiable, :label => "是否可见", collection: ['true','false'] %>
+    <%= f.file_field :image %>
+    <%= f.submit t('.save') %>
+  </div>
+<% end %>

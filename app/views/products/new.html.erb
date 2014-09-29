@@ -1,0 +1,22 @@
+<%= render 'stylesheet' %>
+<div class="span6 pull-left">
+  <h3>添加新产品</h3>
+
+  <%= render 'form' %>
+
+  <%= link_to '返回', products_path %>
+</div>
+
+<div class="span4 pull-left">
+  <h2> 批量导入产品 </h2>
+  <%= form_tag import_products_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "导入" %>
+  <% end %>
+</div>
+
+<script>
+  $(function(){
+  $('.links > a').click();
+  });
+</script>

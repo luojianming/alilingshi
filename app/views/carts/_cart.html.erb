@@ -1,0 +1,46 @@
+<table class="table table-condensed">
+    <thead>
+      <tr>
+        <th><%= t('.image') %></th>
+        <th>商品信息</th>
+        <th><%= t('.quantity') %></th>
+        <th><%= t('.price') %></th>
+      </tr>
+    </thead>
+  <% cart.line_items.each do |item| %>
+    <% @photo = Photo.find(item.photo_id) %>
+    <tr>
+      <td><%= link_to image_tag(@photo.image_url(:small)), product_path(@photo.product) %>
+      <td><%= item.product.description %></td>
+      <td>
+        <span id="item_<%=item.id%>">
+          <%= best_in_place item, :quantity, :type => :input %>
+        </span>
+        <a id="quantity_edit_<%= item.id %>"><i class="icon-edit"></i></a>
+      </td>
+      <td class="item_price" id="item_price_<%=item.id%>" ><%= item.total_price %>€</td>
+      <td><%= link_to t('.delete'), item, :method => :delete,
+          :confirm => t('.confirm') %></td>
+    </tr>
+  <script>
+    $(".best_in_place").bind("ajax:success", function(){
+      $.get("/ajax_change_price/", {id: "<%= item.id%>"}, null, "script");
+    });
+  $(function(){
+    $('#quantity_edit_<%=item.id %>').click(function(){
+      $('#item_<%=item.id%> .best_in_place').click();
+    });
+  });
+  </script>
+  <% end %>
+  <tr class="total_line" >
+    <td colspan="4" ></td>
+    <td class="total_cell" ><%= t('.total') %>: <span id="cart_total_price"><%= cart.total_price %>€</span></td>
+  </tr>
+</table>
+
+<script>
+  $(document).ready(function(){
+    $(".best_in_place").best_in_place();
+  });
+</script>

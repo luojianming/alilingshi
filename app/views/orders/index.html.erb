@@ -1,0 +1,46 @@
+<%= render 'stylesheet' %>
+<h1><%= link_to t('.unfinished_order'), unfinished_orders_path, :method => :get %></h1>
+<h3><%= link_to t('.all_order'), orders_path %></h3>
+<h3><%= link_to t('.finished_order'), finished_orders_path, :method => :get %></h3>
+
+<table class="table table-condensed">
+  <thead>
+  <tr>
+    <th><%= t('.name') %></th>
+    <th><%= t('.address') %></th>
+    <th><%= t('.tel') %></th>
+    <th><%= t('.time') %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+<% @orders.each do |order| %>
+  <tr>
+    <td><%= order.name %></td>
+    <td><%= order.address %></td>
+    <td><%= order.tel %></td>
+    <td><%= order.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+    <td>
+      <% if order.processed == 0 %>
+        等待发货
+      <% elsif order.processed == 1 %>
+        交易完成
+      <% else %>
+        已发货
+      <% end %>
+    </td>
+    <td><%= link_to '查看', order %></td>
+    <td><%= link_to t('.finish'), order_path(order), :method => :put %></td>
+  <!--
+    <td><%= link_to t('.destroy'), order, method: :delete, data: { confirm: '确定删除？' } %></td>
+    -->
+  </tr>
+<% end %>
+<div class="pull-right">
+  <%= will_paginate @orders %>
+</div>
+</table>
+
+<br/>
+

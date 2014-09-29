@@ -1,0 +1,24 @@
+<div class="span4 pull-left" id="photo">
+  <%= image_tag(@product.photos[0].image_url(:big)) %>
+</div>
+<div class="span6 pull-left product_info">
+  <p class="description"><%= @product.description%></p>
+  <p style="margin-bottom: 20px;">
+     <span class="small_font"><%= t('.price') %></span>
+     <span class="price"><s>¥<%= @product.price %></s></span>
+     <span class="price"> 
+       <span>¥<%= (@product.price*(100-@product.discount)/100).round(1)%></span>
+     </span>
+  </p>
+  <p><span class="small_font">净含量</span>
+     <span><%= @product.size %></span>
+  </p>
+ 
+
+  <%= form_for(@product.line_items.build(product_id: @product.id)) do |f|%>
+    <%= f.label :quantity, t('.quantity') %>
+    <%= f.text_field :quantity, :cols => 4 %>
+    <%= f.hidden_field :product_id%></br>
+    <%= f.submit t('.add_to_cart'), :class => "btn" %>
+  <% end %>
+</div>

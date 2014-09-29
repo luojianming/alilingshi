@@ -1,0 +1,6 @@
+.nested-fields
+  fieldset
+    h4 图片
+    = f.input :color
+    = f.file_field :image
+    = link_to_remove_association "移除", f
