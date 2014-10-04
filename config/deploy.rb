@@ -3,22 +3,22 @@ require 'thinking_sphinx/deploy/capistrano'
 
 load 'deploy' unless defined?(_cset)
 
-server "144.76.143.23", :web, :app, :db, primary: true
+server "210.209.123.232", :web, :app, :db, primary: true
 
 _cset :asset_env, "RAILS_GROUPS=assets"
 _cset :assets_prefix, "assets"
 _cset :assets_role, [:web]
 
 _cset :normalize_asset_timestamps, false
-set :application, "online_shopping"
+set :application, "alilingshi"
 set :user, "luojm"
-set :deploy_to, "/home/#{user}/online_shopping"
+set :deploy_to, "/home/#{user}/alilingshi"
 set :deploy_via, :remote_cache
 set :use_sudo, true
 set :shared_children, %w(public/system log tmp/pids)
 set :bundle_cmd, 'source $HOME/.bash_profile && bundle'
 set :scm, "git"
-set :repository, "git@github.com:luojianming/online_shopping.git"
+set :repository, "git@github.com:luojianming/alilingshi.git"
 set :branch, "master"
 set :shared_children, shared_children + %w{public/uploads}
 
