@@ -69,7 +69,7 @@ namespace :deploy do
     end
   end
 
-   before 'deploy:update_code', 'thinking_sphinx:stop'
+#   before 'deploy:update_code', 'thinking_sphinx:stop'
    after 'deploy:restart', 'thinking_sphinx:restart'
 
 

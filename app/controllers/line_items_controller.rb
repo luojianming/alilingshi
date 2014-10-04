@@ -49,6 +49,7 @@ class LineItemsController < ApplicationController
       if @line_item.save
         format.html { redirect_to @line_item.cart }
         format.json { render json: @line_item, status: :created, location: @line_item }
+        format.js
       else
         format.html { render action: "new" }
         format.json { render json: @line_item.errors, status: :unprocessable_entity }
