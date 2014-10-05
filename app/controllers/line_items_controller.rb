@@ -47,12 +47,14 @@ class LineItemsController < ApplicationController
     @line_item.photo_id = product.photos[0].id
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart }
-        format.json { render json: @line_item, status: :created, location: @line_item }
+#        format.html { redirect_to @line_item.cart }
+#        format.json { render json: @line_item, status: :created, location: @line_item }
         format.js
+=begin
       else
         format.html { render action: "new" }
         format.json { render json: @line_item.errors, status: :unprocessable_entity }
+=end
       end
     end
   end
