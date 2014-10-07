@@ -1,6 +1,8 @@
 #encoding: utf-8
 class CategoriesController < ApplicationController
+  before_filter :authenticate_user!
   def index
+    authorize! :index, @category, :message => 'Not authorized as an administrator.'
     @categories = Category.all
 
     respond_to do |format|
@@ -10,6 +12,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    authorize! :index, @category, :message => 'Not authorized as an administrator.'
     @category = Category.find(params[:id])
 
     respond_to do |format|
@@ -19,6 +22,7 @@ class CategoriesController < ApplicationController
   end
 
   def new
+    authorize! :index, @category, :message => 'Not authorized as an administrator.'
     @category = Category.new
 
     respond_to do |format|
@@ -28,10 +32,12 @@ class CategoriesController < ApplicationController
   end
 
   def edit
+    authorize! :index, @category, :message => 'Not authorized as an administrator.'
     @category = Category.find(params[:id])
   end
 
   def create
+    authorize! :index, @category, :message => 'Not authorized as an administrator.'
     @category = Category.new(params[:category])
 
     respond_to do |format|
@@ -48,6 +54,7 @@ class CategoriesController < ApplicationController
 
 
   def update
+    authorize! :index, @category, :message => 'Not authorized as an administrator.'
     @category = Category.find(params[:id])
 
     respond_to do |format|
@@ -63,6 +70,7 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
+    authorize! :index, @category, :message => 'Not authorized as an administrator.'
     @category = Category.find(params[:id])
     @category.destroy
 

@@ -28,7 +28,7 @@
           <button type="submit" class="btn">加入购物车</button>
         </form>
         -->
-        <%= form_for(product.line_items.build(product_id: product.id)) do |f|%>
+        <%= form_for(product.line_items.build(product_id: product.id), :remote => true) do |f|%>
           <%= f.text_field :quantity, :cols => 4 %>
           <%= f.hidden_field :product_id%>
           <%= f.submit '加入购物车', :class => "btn" %>

@@ -11,9 +11,9 @@
   <div class="description">
     <span> <%= product.description[0,30] %>...</span>
   </div>
-  <%= form_for(product.line_items.build(product_id: product.id)) do |f|%>
+  <%= form_for(product.line_items.build(product_id: product.id), :remote => true) do |f|%>
     <%= f.text_field :quantity %>
     <%= f.hidden_field :product_id%></br>
-    <%= f.submit "加入购物车", :class => "btn", :remote => true %>
+    <%= f.submit "加入购物车", :class => "btn" %>
   <% end %>
 </div>

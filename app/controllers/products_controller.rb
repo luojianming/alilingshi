@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /prooducts.json
   before_filter :authenticate_user!, :except => [:show]
+  layout "home"
   def index
 
     authorize! :manage, @product, :message => '对不起，您没有访问权限'

@@ -1,7 +1,10 @@
-<div class="span4 pull-left" id="photo">
+<% content_for :head do %>
+  <%= stylesheet_link_tag "products" %>
+<% end %> 
+<div class="span4 pull-left" id="photo"style="margin-bottom: 10px;">
   <%= image_tag(@product.photos[0].image_url(:big)) %>
 </div>
-<div class="span6 pull-left product_info">
+<div class="span6 pull-left product_info" >
   <p class="description"><%= @product.description%></p>
   <p style="margin-bottom: 20px;">
      <span class="small_font"><%= t('.price') %></span>
@@ -15,7 +18,7 @@
   </p>
  
 
-  <%= form_for(@product.line_items.build(product_id: @product.id)) do |f|%>
+  <%= form_for(@product.line_items.build(product_id: @product.id), :remote => true) do |f|%>
     <%= f.label :quantity, t('.quantity') %>
     <%= f.text_field :quantity, :cols => 4 %>
     <%= f.hidden_field :product_id%></br>

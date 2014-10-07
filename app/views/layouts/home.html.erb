@@ -10,36 +10,38 @@
     <%= yield(:head) %>
   </head>
   <header id="header">
-  <div id="header-top">
-    <span class="pull-right">联系电话：<span>8888888</span></span>
-    <% if session[:cart_id] %>
-      <span>
-        <span style="font: bolder"><%= Cart.find(session[:cart_id]).total_quantity %></span>
-        <i class="icon-shopping-cart"></i>
-        <%= link_to "购物车", cart_path(session[:cart_id]) %> 
-      </span>
-    <% else %>
-      <span>
-        <span style="font: bolder">0</span>
-        <i class="icon-shopping-cart"></i>
-        <%= t('.shopping_cart') %>
-      </span>
-    <% end %>
-    <% if session[:uid] %>
-      <span>
-        <%= link_to "我的订单", order_path(session[:uid]) %>
-      </span>
-    <% end %>
-  </div>
+    <div id="header-top" class="pull-right">
+      <span style="margin-right: 40px;">联系电话：<span>8888888</span></span>
+      <% if session[:cart_id] %>
+        <span>
+          <%= link_to "购物车", cart_path(session[:cart_id]) %> 
+          <i class="icon-shopping-cart"></i>
+          <span style="font: bolder" id="cart_num"><%= Cart.find(session[:cart_id]).total_quantity %></span>
+        </span>
+      <% else %>
+        <span>
+          购物车
+          <i class="icon-shopping-cart"></i>
+          <span style="font: bolder" id="cart_num">0</span>
+        </span>
+      <% end %>
+      <% if session[:uid] %>
+        <span style="margin-left: 40px;">
+          <%= link_to "我的订单", order_path(session[:uid]) %>
+        </span>
+      <% end %>
+    </div>
   <div id="hwrap">
-    <a href="/" title="Humaan" class="header-logo">
-      阿里零食
-    </a>
-    <nav>
-    <% Category.all.each do |category| %>
-      <%= link_to category.name, root_path(:search => category.name), :class => "active" %>
-    <% end %>
-    </nav>
+    <div id="header-main">
+      <a href="/" title="Humaan" class="header-logo">
+        阿里零食
+      </a>
+      <nav>
+      <% Category.all.each do |category| %>
+        <%= link_to category.name, root_path(:search => category.name), :class => "active" %>
+      <% end %>
+      </nav>
+    </div>
   </div>
   </header>
   <body id="home_body" class="<%= controller_name %> <%= action_name %>">
