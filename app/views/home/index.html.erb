@@ -28,12 +28,12 @@
       </div>
       <div>
         <p class="price"><s class="yuanjia">￥<%= product.price%></s><span class="discount_price">￥108</span>
-        <span style="float: right">净含量：<%= product.size%></span>
+        <span style="float: right">净含量：<%= product.size%>g</span>
         </p>
 
         <p><%= product.description %></p>
 
-        <p style="margin-top: 10px" class="pull-right"><%= link_to '详情', product_path(product) %></p>
+        <p class="pull-right"><%= link_to '详情', product_path(product) %></p>
 
 
         <!--
