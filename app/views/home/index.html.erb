@@ -66,10 +66,7 @@ $(function(){
 $(function(){
 	$(".inc_cnt").click(function(){
 		//alert("hi");
-    var cnt = parseInt($(this).siblings("input_prepend").children("input").attr("value"));
-    if (cnt == 0){
-      return;
-     }
+		var cnt = parseInt($(this).parent().siblings("input").attr("value"));
 		//alert(cnt+1);
 		$(this).parent().siblings("input").attr("value", cnt+1);
 		//alert($(this).parent().next().attr("value"));
@@ -78,6 +75,9 @@ $(function(){
 	$(".des_cnt").click(function(){
 		//alert("hi");
 		var cnt = parseInt($(this).parent().siblings("input").attr("value"));
+    if (cnt == 0){
+      return;
+     }
 		//alert(cnt+1);
 		if (cnt >= 1){
 			$(this).parent().siblings("input").attr("value", cnt-1);
