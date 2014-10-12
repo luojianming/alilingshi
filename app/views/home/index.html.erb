@@ -27,7 +27,7 @@
         <%= image_tag(product.photos[0].image_url(:thumb)) %>
       </div>
       <div>
-        <p class="price"><s class="yuanjia">￥<%= product.price%></s><span class="discount_price">￥108</span>
+        <p class="price"><s class="yuanjia">￥<%= product.price%></s><span class="discount_price">¥<%= (product.price*(100-product.discount)/100).round(1)%></span>
         <span style="float: right">净含量：<%= product.size%>g</span>
         </p>
 
