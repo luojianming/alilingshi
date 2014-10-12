@@ -3,7 +3,10 @@
 
   <div class="form-inputs">
     <%= f.input :name, :label => t(".name") %>
-    <%= f.input :address, :input_html => {:rows => 4 }, :label => t(".address") %>
+    <%= f.input :address, collection: ["阿里巴巴西溪园区 一号楼", "阿里巴巴西溪园区 二号楼",
+                                       "阿里巴巴西溪园区 三号楼","阿里巴巴西溪园区 四号楼",
+                                       "阿里巴巴西溪园区 五号楼","阿里巴巴西溪园区 六号楼"],
+                                       :label => "地址", :hint => "目前仅限阿里巴巴西溪园区" %>
     <%= f.input :tel, :label => t(".tel") %>
     <%= f.button :submit, "创建订单" %>
   </div>

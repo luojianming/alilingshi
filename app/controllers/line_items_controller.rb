@@ -43,6 +43,9 @@ class LineItemsController < ApplicationController
   def create
     @cart = current_cart
     product = Product.find(params[:line_item][:product_id])
+    if (params[:line_item][:quantity].to_i == 0)
+      return
+    end
     @line_item = @cart.add_product(product.id, params[:line_item][:quantity].to_i)
     @line_item.photo_id = product.photos[0].id
     respond_to do |format|

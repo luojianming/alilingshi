@@ -4,24 +4,102 @@
 <div class="span4 pull-left" id="photo"style="margin-bottom: 10px;">
   <%= image_tag(@product.photos[0].image_url(:big)) %>
 </div>
-<div class="span6 pull-left product_info" >
+<div class="pull-left product_info" >
+  <div style="height: 250px;">
   <p class="description"><%= @product.description%></p>
   <p style="margin-bottom: 20px;">
      <span class="small_font"><%= t('.price') %></span>
      <span class="price"><s>¥<%= @product.price %></s></span>
      <span class="price"> 
-       <span>¥<%= (@product.price*(100-@product.discount)/100).round(1)%></span>
+       <span class="discount_price">¥<%= (@product.price*(100-@product.discount)/100).round(1)%></span>
      </span>
   </p>
   <p><span class="small_font">净含量</span>
-     <span><%= @product.size %></span>
+     <span><%= @product.size %>g</span>
   </p>
+  <p style="margin-top: 20px">
+    <span class="small_font"><%= t('.color')%></span>
+    <% @photos = @product.photos %>
+    <% for i in 0...@photos.size() %>
+      <% @photo = @photos[i] %>
+      <% if i == 0 %>
+        <%= link_to(image_tag(@photo.image_url(:small), class: "color_selected small_img"), change_color_path(:id => @photo.id), class: "color_alt", id: "photo_"+@photo.id.to_s,:remote => true) %>
+      <% else %>
+        <%= link_to(image_tag(@photo.image_url(:small), class: "small_img"), change_color_path(:id => @photo.id), class: "color_alt", id: "photo_"+@photo.id.to_s,:remote => true) %>
+      <% end %>
+    <% end %>
+  </p>
+</div>
  
 
-  <%= form_for(@product.line_items.build(product_id: @product.id), :remote => true) do |f|%>
-    <%= f.label :quantity, t('.quantity') %>
-    <%= f.text_field :quantity, :cols => 4 %>
-    <%= f.hidden_field :product_id%></br>
-    <%= f.submit t('.add_to_cart'), :class => "btn" %>
-  <% end %>
+<%= form_for(@product.line_items.build(product_id: @product.id), :remote => true) do |f|%>
+  <div style="display: inline; float: left" class="input-prepend input-append">
+    <span class="add-on"><i class="icon-chevron-down des_cnt"></i></span>
+    <%= f.text_field :quantity, :value => 1 %>
+    <span class="add-on"><i class="icon-chevron-up inc_cnt"></i></span>
+  </div>
+  <%= f.hidden_field :product_id%>
+  <%= f.submit "加入购物车", :class => "btn add_cart" %>
+<% end %>
 </div>
+<script>
+
+$(function(){
+	$(".inc_cnt").click(function(){
+		//alert("hi");
+		var cnt = parseInt($(this).parent().siblings("input").attr("value"));
+		//alert(cnt+1);
+		$(this).parent().siblings("input").attr("value", cnt+1);
+		//alert($(this).parent().next().attr("value"));
+	});
+	
+	$(".des_cnt").click(function(){
+		//alert("hi");
+		var cnt = parseInt($(this).parent().siblings("input").attr("value"));
+		//alert(cnt+1);
+		if (cnt >= 1){
+			$(this).parent().siblings("input").attr("value", cnt-1);
+		}else {
+			$(this).parent().siblings("input").attr("value", 0);
+		}
+			
+		//alert($(this).parent().next().attr("value"));
+	});
+});
+		
+$(function(){
+	$('.add_cart').click(function(){
+   // alert("hi");
+		var cnt = parseInt($(this).siblings(".input-prepend").children("input").attr("value"));
+    if (cnt == 0){
+      return;
+     }
+		var obj = $("#photo").children("img");
+		var flyElm = $(obj).clone().css('opacity','0.7');
+		flyElm.css({
+			'z-index': 9000,
+			'display': 'block',
+			'position': 'absolute',
+			'top': $(obj).offset().top +'px',
+			'left': $(obj).offset().left +'px',
+			'width': $(obj).width() +'px',
+			'height': $(obj).height() +'px'
+		});
+		$('body').append(flyElm);
+		flyElm.animate({
+			top:$('#cart_box').offset().top,
+			left:$('#cart_box').offset().left,
+			width:10,
+			height:10,
+		},'slow').fadeTo(0,0.1).hide(0);
+	});
+});
+
+$(function(){
+  $(".small_img").mouseover(function(){
+    $(this).click();
+  });
+});
+
+
+</script>

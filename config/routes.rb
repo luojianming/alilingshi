@@ -23,6 +23,7 @@ Rails3BootstrapDeviseCancan::Application.routes.draw do
   end 
   resources :banners
   resources :categories
+  resources :addresses
   resources :line_items
   get "/filter_by_stock" => "products#filter_by_stock"
   get "/finished_orders" => "orders#finished_orders"

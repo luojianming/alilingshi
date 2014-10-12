@@ -14,14 +14,14 @@
       <span style="margin-right: 40px;">联系电话：<span>8888888</span></span>
       <% if session[:cart_id] %>
         <span>
-          <%= link_to "购物车", cart_path(session[:cart_id]) %> 
-          <i class="icon-shopping-cart"></i>
+          <span id="cart_link"><%= link_to "购物车", cart_path(session[:cart_id]) %></span>
+          <i class="icon-shopping-cart" id="cart_box"></i>
           <span style="font: bolder" id="cart_num"><%= Cart.find(session[:cart_id]).total_quantity %></span>
         </span>
       <% else %>
         <span>
-          购物车
-          <i class="icon-shopping-cart"></i>
+          <span id="cart_link">购物车</span>
+          <i class="icon-shopping-cart" id="cart_box"></i>
           <span style="font: bolder" id="cart_num">0</span>
         </span>
       <% end %>

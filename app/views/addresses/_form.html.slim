@@ -1,0 +1,10 @@
+= simple_form_for @address do |f|
+  table
+    tr
+      td
+        = f.input :city, :label => "城市"
+        = f.input :area, :label => "区域"
+  .actions.submit_address_form
+    = f.button :submit, :disable_with => 'Please wait...'
+
+

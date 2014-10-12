@@ -1,20 +1,31 @@
 <div class="intro">
   <h1>不一样的味道，不一样的精彩</h1>
   <h2>选好喜爱的商品后，提交下单，一小时内送货上门，货到付款！无需注册！</h2>
-  <h2>目前仅面向<span style="color: red">阿里西溪园区</span></h2>
+  <h2>目前仅面向<span style="color: red; font-size: inherit">阿里西溪园区</h2>
 </div>
 
 <div id="today_recommend">
   <% if @cur_cateory == nil %>
-    <h2 class="title">今日推荐</h2>
+    <h2 class="title" style="font-size: 26px">今日推荐</h2>
   <% else %>
-    <h2 class="title"><%= @cur_cateory %>系列</h2>
+    <h2 class="title" style="font-size: 26px"><%= @cur_cateory %>系列</h2>
   <% end %>
   <% @products.each do |product|%>
     <div class="box">
-      <a href="/" style="display: block">
+      <div style="cursor:pointer;">
+        <span class="mask">
+          <%= form_for(product.line_items.build(product_id: product.id), :remote => true) do |f|%>
+            <div style="display: inline; float: left" class="input-prepend input-append">
+              <span class="add-on"><i class="icon-chevron-down des_cnt"></i></span>
+              <%= f.text_field :quantity, :value => 1 %>
+              <span class="add-on"><i class="icon-chevron-up inc_cnt"></i></span>
+            </div>
+            <%= f.hidden_field :product_id%>
+            <%= f.submit "加入购物车", :class => "btn add_cart" %>
+          <% end %>
+        </span>
         <%= image_tag(product.photos[0].image_url(:thumb)) %>
-      </a>
+      </div>
       <div>
         <p class="price"><s class="yuanjia">￥<%= product.price%></s><span class="discount_price">￥108</span>
         <span style="float: right">净含量：<%= product.size%></span>
@@ -22,17 +33,15 @@
 
         <p><%= product.description %></p>
 
+        <p style="margin-top: 10px" class="pull-right"><%= link_to '详情', product_path(product) %></p>
+
+
         <!--
         <form class="form-inline pull-left" style="padding-left: 10px;">
           <input type="text" style="width:20px" placeholder="1">
           <button type="submit" class="btn">加入购物车</button>
         </form>
         -->
-        <%= form_for(product.line_items.build(product_id: product.id), :remote => true) do |f|%>
-          <%= f.text_field :quantity, :cols => 4 %>
-          <%= f.hidden_field :product_id%>
-          <%= f.submit '加入购物车', :class => "btn" %>
-        <% end %>
       </div>
     </div>
   <% end %>
@@ -41,4 +50,69 @@
 <div style="height: 100px; width: 100%; clear: both">
 </div>
 
+<script>
+$(function(){
+	$(window).scroll(function(){
+		//alert("Hi");
+		if( $(window).scrollTop() > 50 ){
+		//	alert("Hi");
+			$("#header").addClass("stuck"); 
+		}else{
+			$("#header").removeClass("stuck");
+		}
+	});
+});
+
+$(function(){
+	$(".inc_cnt").click(function(){
+		//alert("hi");
+    var cnt = parseInt($(this).siblings("input_prepend").children("input").attr("value"));
+    if (cnt == 0){
+      return;
+     }
+		//alert(cnt+1);
+		$(this).parent().siblings("input").attr("value", cnt+1);
+		//alert($(this).parent().next().attr("value"));
+	});
+	
+	$(".des_cnt").click(function(){
+		//alert("hi");
+		var cnt = parseInt($(this).parent().siblings("input").attr("value"));
+		//alert(cnt+1);
+		if (cnt >= 1){
+			$(this).parent().siblings("input").attr("value", cnt-1);
+		}else {
+			$(this).parent().siblings("input").attr("value", 0);
+		}
+			
+		//alert($(this).parent().next().attr("value"));
+	});
+});
+		
+$(function(){
+	$('.add_cart').click(function(){
+   // alert("hi");
+		var cnt = parseInt($(this).parent().siblings("input").attr("value"));
+		var obj = $(this).parent().parent().siblings("img");
+		var flyElm = $(obj).clone().css('opacity','0.7');
+		flyElm.css({
+			'z-index': 9000,
+			'display': 'block',
+			'position': 'absolute',
+			'top': $(obj).offset().top +'px',
+			'left': $(obj).offset().left +'px',
+			'width': $(obj).width() +'px',
+			'height': $(obj).height() +'px'
+		});
+		$('body').append(flyElm);
+		flyElm.animate({
+			top:$('#cart_box').offset().top,
+			left:$('#cart_box').offset().left,
+			width:10,
+			height:10,
+		},'slow').fadeTo(0,0.1).hide(0);
+	});
+});
+
+</script>
 

@@ -1,1 +1,2 @@
 $('#cart_num').html("<%= @cart.total_quantity %>");
+$('#cart_link').html('<%= link_to "购物车", cart_path(session[:cart_id]) %>');
