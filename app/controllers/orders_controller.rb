@@ -3,7 +3,7 @@ require 'will_paginate/array'
 class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
-  before_filter :authenticate_user!, :except => [:show, :new, :create]
+  before_filter :authenticate_user!, :except => [:my_orders, :new, :create]
   layout "home"
   def index
     authorize! :manage, @order, :message => 'Not authorized as an administrator'
@@ -22,8 +22,8 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
-    @order_ids = session[params[:id]].to_s
-    @order_id_arr = @order_ids.split(",")
+    authorize! :manage, @order, :message => 'Not authorized as an administrator'
+    @order = Order.find(params[:id])
     store_location
     respond_to do |format|
       format.html # show.html.erb
@@ -58,18 +58,16 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = Order.new(params[:order])
+    @order.order_id = SecureRandom.hex(8)
     @order.add_line_items_from_cart(current_cart)
     respond_to do |format|
       if @order.save
-        Cart.destroy(session[:cart_id])
+        current_cart.destroy
         session[:cart_id] = nil
-        if (session[:uid] == nil)
-          session[:uid] = SecureRandom.hex(16)
-        end
-        if (session[session[:uid]] == nil)
-          session[session[:uid]] = @order.id.to_s
+        if (session[:orders_id] == nil)
+          session[:orders_id] = @order.order_id
         elsif
-          session[session[:uid]] = session[session[:uid]].to_s + "," + @order.id.to_s
+          session[:orders_id] = session[:orders_id].to_s + "," + @order.order_id
         end
      #   session[:order_id] = @order.id
      #   UserMailer.new_order_email(@order).deliver
@@ -107,7 +105,14 @@ class OrdersController < ApplicationController
     authorize! :manage, @order, :message => 'Not authorized as an administrator'
     @order = Order.find(params[:id])
     @order.destroy
-
+    @order_ids = session[:orders_id].to_s
+    @order_id_arr = @order_ids.split(",")
+    @order_id_arr.delete(@order.order_id)
+    if (@order_id_arr.size == 0)
+      session[:orders_id] = nil
+    else
+      session[:orders_id] = @order_id_arr.join(",")
+    end
     respond_to do |format|
       format.html { redirect_to orders_url }
       format.json { head :no_content }
@@ -122,6 +127,15 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.html {render 'orders/index'}
       format.json { render json: @orders }
+    end
+  end
+
+  def my_orders
+    @order_ids = session[:orders_id].to_s
+    @order_id_arr = @order_ids.split(",")
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @order }
     end
   end
 

@@ -2,6 +2,8 @@
 
 <p id="notice"><%= notice %></p>
 
+<% @order_id_arr.each do |order_id| %>
+  <% @order = Order.find_by_order_id(order_id) %>
 <table class="table table-condensed">
     <thead>
       <tr>
@@ -55,3 +57,4 @@
       <% end %>
     </tr>
   </table>
+<% end %>

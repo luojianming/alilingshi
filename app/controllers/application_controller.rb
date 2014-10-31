@@ -25,10 +25,12 @@ class ApplicationController < ActionController::Base
   private
 
   def current_cart
-    Cart.find(session[:cart_id])
-  rescue ActiveRecord::RecordNotFound
-    cart = Cart.create
-    session[:cart_id] = cart.id
+    if (session[:cart_id] != nil)
+      cart = Cart.find_by_cart_id(session[:cart_id])
+    else
+      cart = Cart.create(:cart_id => SecureRandom.hex(8))
+      session[:cart_id] = cart.cart_id
+    end
     cart
   end
 

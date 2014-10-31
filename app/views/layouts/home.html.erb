@@ -16,7 +16,7 @@
         <span>
           <span id="cart_link"><%= link_to "购物车", cart_path(session[:cart_id]) %></span>
           <i class="icon-shopping-cart" id="cart_box"></i>
-          <span style="font: bolder" id="cart_num"><%= Cart.find(session[:cart_id]).total_quantity %></span>
+          <span style="font: bolder" id="cart_num"><%= Cart.find_by_cart_id(session[:cart_id]).total_quantity %></span>
         </span>
       <% else %>
         <span>
@@ -25,9 +25,9 @@
           <span style="font: bolder" id="cart_num">0</span>
         </span>
       <% end %>
-      <% if session[:uid] %>
+      <% if session[:orders_id] %>
         <span style="margin-left: 40px;">
-          <%= link_to "我的订单", order_path(session[:uid]) %>
+          <%= link_to "我的订单", my_orders_path %>
         </span>
       <% end %>
     </div>

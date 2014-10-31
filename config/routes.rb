@@ -32,6 +32,7 @@ Rails3BootstrapDeviseCancan::Application.routes.draw do
   get "/unvisiable_all" => "banners#unvisiable_all"
   get "/change_color" => "line_items#change_color"
   get "/about" => "home#about"
+  get "/my_orders" => "orders#my_orders"
   resources :carts
   resources :products do 
     collection { post :import }
